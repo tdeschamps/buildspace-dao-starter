@@ -158,17 +158,6 @@ const App = () => {
       });
   }, [hasClaimedNFT, proposals, address]);
 
-  if (error && error.name === "UnsupportedChainIdError") {
-    return (
-      <div className="unsupported-network">
-        <h2>Please connect to Rinkeby</h2>
-        <p>
-          This dapp only works on the Rinkeby network, please switch networks
-          in your connected wallet.
-        </p>
-      </div>
-    );
-  }
 
   // Now, we combine the memberAddresses and memberTokenAmounts into a single array
   const memberList = useMemo(() => {
@@ -180,10 +169,22 @@ const App = () => {
           // hold any of our token.
           memberTokenAmounts[address] || 0,
           18,
-        ),
-      };
-    });
-  }, [memberAddresses, memberTokenAmounts]);
+          ),
+        };
+      });
+    }, [memberAddresses, memberTokenAmounts]);
+
+    if (error && error.name === "UnsupportedChainIdError") {
+      return (
+        <div className="unsupported-network">
+          <h2>Please connect to Rinkeby</h2>
+          <p>
+            This dapp only works on the Rinkeby network, please switch networks
+            in your connected wallet.
+          </p>
+        </div>
+      );
+    }
 
   // This is the case where the user hasn't connected their wallet
   // to your web app. Let them call connectWallet.
